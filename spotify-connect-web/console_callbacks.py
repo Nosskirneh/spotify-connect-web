@@ -40,11 +40,11 @@ class PlaybackSession:
 
     def activate(self):
         self._active = True
-        r = requests.post(ADDR + "/activity/8")
+        r = requests.post(ADDR + "/activity/8") # Turn on speakers
 
     def deactivate(self):
         self._active = False
-        r = requests.post(ADDR + "/activity/9")
+        r = requests.post(ADDR + "/activity/9") # Turn off speakers
 
 class AlsaSink:
 
