@@ -3,7 +3,6 @@
 #TODO: Add error checking
 #TODO: Show when request fails on webpage
 import os
-import sys
 import argparse
 import re
 from flask import Flask, request, abort, jsonify, render_template, redirect, flash, url_for
@@ -36,7 +35,7 @@ def validate_cors_host(host):
 web_arg_parser.add_argument('--cors', help=cors_help, action='append', type=validate_cors_host)
 args = web_arg_parser.parse_known_args()[0]
 
-app = Flask(__name__, root_path=sys.path[0])
+app = Flask(__name__)
 Bootstrap(app)
 #Add CORS headers to API requests for specified hosts
 CORS(app, resources={r"/api/*": {"origins": args.cors}})
@@ -89,35 +88,16 @@ def playback_next():
     lib.SpPlaybackSkipToNext()
     return '', 204
 
-
 #TODO: Add ability to disable shuffle/repeat
 @app.route('/api/playback/shuffle')
 def playback_shuffle():
-    lib.SpPlaybackEnableShuffle(True)
+    lib.SpPlaybackEnableShuffle()
     return '', 204
-
-@app.route('/api/playback/shuffle/<status>', endpoint='shuffle_toggle')
-def playback_shuffle(status):
-    if status == 'enable':
-        lib.SpPlaybackEnableShuffle(True)
-    elif status == 'disable':
-        lib.SpPlaybackEnableShuffle(False)
-    return '', 204
-
 
 @app.route('/api/playback/repeat')
 def playback_repeat():
-    lib.SpPlaybackEnableRepeat(True)
+    lib.SpPlaybackEnableRepeat()
     return '', 204
-
-@app.route('/api/playback/repeat/<status>', endpoint='repeat_toggle')
-def playback_repeat(status):
-    if status == 'enable':
-        lib.SpPlaybackEnableRepeat(True)
-    elif status == 'disable':
-        lib.SpPlaybackEnableRepeat(False)
-    return '', 204
-
 
 @app.route('/api/playback/volume', methods=['GET'])
 def playback_volume():
@@ -134,7 +114,6 @@ def playback_volume():
         }), 400
     lib.SpPlaybackUpdateVolume(int(volume))
     return '', 204
-
 
 #Info routes
 @app.route('/api/info/metadata')

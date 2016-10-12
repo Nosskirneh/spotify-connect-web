@@ -20,4 +20,5 @@ lib = ffi.verify("""
     #include "spotify.h"
 """, include_dirs=['./'],
     library_dirs=['./'],
+    tmpdir=os.path.join(sys.path[0], '__pycache__'),
     libraries=[str('spotify_embedded_shared')])

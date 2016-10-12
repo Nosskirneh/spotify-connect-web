@@ -7,12 +7,17 @@ from threading import Thread
 import threading
 from connect_ffi import ffi, lib
 
+import sys
+sys.path.append("/storage/.python")
+import requests
+
 
 RATE = 44100
 CHANNELS = 2
 PERIODSIZE = int(44100 / 4) # 0.25s
 SAMPLESIZE = 2 # 16 bit integer
 MAXPERIODS = int(0.5 * RATE / PERIODSIZE) # 0.5s Buffer
+ADDR = "http://192.168.0.120:5000"
 
 audio_arg_parser = argparse.ArgumentParser(add_help=False)
 
@@ -35,9 +40,11 @@ class PlaybackSession:
 
     def activate(self):
         self._active = True
+        r = requests.post(ADDR + "/activity/8")
 
     def deactivate(self):
         self._active = False
+        r = requests.post(ADDR + "/activity/9")
 
 class AlsaSink:
 
