@@ -6,5 +6,7 @@ spotify_appkey.key
 libspotify_embedded_shared.so
 venv
 credentials.json
+credentials_smartRemote.py
 spotify-connect-web.tar.gz
 startconnect.sh
+sftp-config.json
