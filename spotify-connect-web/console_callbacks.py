@@ -10,6 +10,8 @@ from connect_ffi import ffi, lib
 import sys
 sys.path.append("/storage/.python")
 import requests
+from requests.auth import HTTPBasicAuth
+from credentials_smartRemote import *
 
 
 RATE = 44100
@@ -18,6 +20,7 @@ PERIODSIZE = int(44100 / 4) # 0.25s
 SAMPLESIZE = 2 # 16 bit integer
 MAXPERIODS = int(0.5 * RATE / PERIODSIZE) # 0.5s Buffer
 ADDR = "http://192.168.0.120:5000"
+auth = HTTPBasicAuth(username, password)
 
 audio_arg_parser = argparse.ArgumentParser(add_help=False)
 
@@ -40,11 +43,11 @@ class PlaybackSession:
 
     def activate(self):
         self._active = True
-        r = requests.post(ADDR + "/activity/8") # Turn on speakers
+        r = requests.post(ADDR + "/command", params={'name':"2 ON", 'group':'mhz433'}, auth=auth) # Turn on speakers
 
     def deactivate(self):
         self._active = False
-        r = requests.post(ADDR + "/activity/9") # Turn off speakers
+        r = requests.post(ADDR + "/command", params={'name':'2 OFF', 'group':'mhz433'}, auth=auth) # Turn on speakers
 
 class AlsaSink:
 
