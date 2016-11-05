@@ -19,7 +19,7 @@ CHANNELS = 2
 PERIODSIZE = int(44100 / 4) # 0.25s
 SAMPLESIZE = 2 # 16 bit integer
 MAXPERIODS = int(0.5 * RATE / PERIODSIZE) # 0.5s Buffer
-ADDR = "http://192.168.0.120:5000"
+ADDR = "http://192.168.0.120:3000"
 auth = HTTPBasicAuth(username, password)
 
 audio_arg_parser = argparse.ArgumentParser(add_help=False)
