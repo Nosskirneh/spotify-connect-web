@@ -1,5 +1,6 @@
 *.pyc
 *.so*
+.DS_Store
 spotify-connect-web/lib/
 __pycache__/
 spotify_appkey.key

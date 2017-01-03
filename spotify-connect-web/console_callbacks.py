@@ -43,11 +43,13 @@ class PlaybackSession:
 
     def activate(self):
         self._active = True
-        r = requests.post(ADDR + "/command", params={'name':"2 ON", 'group':'mhz433'}, auth=auth) # Turn on speakers
+        r = requests.post(ADDR + "/command", data={'name':"2 ON", 'group':'mhz433'}, auth=auth) # Turn on speakers
+        print "Sent post request to turn on speakers"
 
     def deactivate(self):
         self._active = False
-        r = requests.post(ADDR + "/command", params={'name':'2 OFF', 'group':'mhz433'}, auth=auth) # Turn on speakers
+        r = requests.post(ADDR + "/command", data={'name':'2 OFF', 'group':'mhz433'}, auth=auth) # Turn off speakers
+        print "Sent post request to turn off speakers"
 
 class AlsaSink:
 
